@@ -11,23 +11,22 @@ const Callbacks = () => {
         const code = searchParams.get('code')
         if (code) {
             const getToken = async () => {
-
                 const body = new URLSearchParams({
                     grant_type: "authorization_code",
                     code: code,
-                    redirect_uri: "https://3001-cs-22039308829-default.cs-asia-southeast1-fork.cloudshell.dev/callback",
-                    client_id: "f4dc20142ff44f7f8ebab97384c58cda",
-                    client_secret: "5f497c76e61f4e2f8c55a6bafd0db387"
+                    redirect_uri: process.env.REACT_APP_REDIRECT_URI,
+                    client_id: process.env.REACT_APP_CLIENT_ID,
+                    client_secret: process.env.REACT_APP_CLIENT_SECRET,
                 });
 
-
-                const response = await fetch("https://accounts.spotify.com/api/token", {
+                const response = await fetch("https://cors-anywhere.herokuapp.com/https://accounts.spotify.com/api/token", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/x-www-form-urlencoded",
                     },
                     body: body,
                 });
+
 
                 const data = await response.json()
                 setAccessToken(data.access_token)
